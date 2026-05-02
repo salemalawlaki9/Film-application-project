@@ -6,10 +6,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //للون خلفية الصفحة
+      backgroundColor: const Color(0xFFF5F6FA),
       // الشريط العلوي للتطبيق
       appBar: AppBar(
         // لون خلفية الشريط
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color(0xFF1E2A38),
         // لون النصوص والأيقونات داخل الشريط
         foregroundColor: Colors.white,
         // درجة الظل أسفل الشريط
@@ -60,14 +62,14 @@ class HomeScreen extends StatelessWidget {
         children: [
           // عنوان قسم الأفلام
           Container(
-            color: Colors.deepPurple.shade50,
+            color: Color(0xFFE8EDF3),
             padding: const EdgeInsets.all(16),
             child: const Text(
               'Popular Movies',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
+                color: Color(0xFF1E2A38),
               ),
             ),
           ),
@@ -91,11 +93,23 @@ class HomeScreen extends StatelessWidget {
           // استدعاء الدالة لإنشاء بطاقة الفيلم الربع
           _buildMovieCard(
             title: 'The Tomorrow War',
-            subtitle: 'Sci-Fi •2021',
+            subtitle: 'Sci-Fi • 2021',
             rating: '7.5',
           ),
         ],
       ),
+      // زر عائم يظهر فوق محتوى الصفحة
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // لاحقًا ممكن نخلي الزر يضيف فيلم أو يفتح شاشة جديدة
+        },
+        backgroundColor: const Color(0xFFC9A227), //أضفنا لون الزر
+        foregroundColor: Colors.white, //للون للايقون هذا يجعل أيقونة + بيضاء.
+        child: const Icon(Icons.add), //ايقونة الاضافة
+      ),
+
+      // مكان ظهور الزر العائم هذا يجعل الزر يظهر أسفل الشاشة في المنتصف.
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -143,10 +157,10 @@ class HomeScreen extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.deepPurple.shade100,
+              color: const Color(0xFFD9E2EC),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Icon(Icons.movie, color: Colors.deepPurple),
+            child: const Icon(Icons.movie, color: Color(0xFF1E2A38)),
           ),
 
           // مسافة بين الأيقونة والنصوص
@@ -178,7 +192,7 @@ class HomeScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.deepPurple,
+              color: Color(0xFFC9A227),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
