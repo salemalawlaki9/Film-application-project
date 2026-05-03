@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -74,27 +75,39 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           _buildMovieCard(
+            context: context,
             title: 'Inception',
             subtitle: 'Sci-Fi • 2010',
             rating: '8.5',
+            description:
+                'A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
           ),
           // استدعاء الدالة لإنشاء بطاقة الفيلم الثانية
           _buildMovieCard(
+            context: context,
             title: 'The Matrix',
             subtitle: 'Sci-Fi • 1999',
             rating: '8.7',
+            description:
+                'A computer hacker discovers that the world he lives in is a simulated reality controlled by intelligent machines.',
           ),
           // استدعاء الدالة لإنشاء بطاقة الفيلم الثالثة
           _buildMovieCard(
+            context: context,
             title: 'Interstellar',
             subtitle: 'Sci-Fi • 2014',
             rating: '8.6',
+            description:
+                'A team of explorers travels through a wormhole in space to find a new home for humanity.',
           ),
           // استدعاء الدالة لإنشاء بطاقة الفيلم الربع
           _buildMovieCard(
+            context: context,
             title: 'The Tomorrow War',
             subtitle: 'Sci-Fi • 2021',
             rating: '7.5',
+            description:
+                'A group of soldiers and civilians are sent into the future to fight a war against alien creatures threatening humanity.',
           ),
         ],
       ),
@@ -115,103 +128,132 @@ class HomeScreen extends StatelessWidget {
 
   // دالة ترجع بطاقة فيلم
   Widget _buildMovieCard({
-    //دالة من نوع ويدجت
-    //عند استدعاء الدالة لازم تعطيها هذه القيم.
+    // دالة من نوع Widget
+    // عند استدعاء الدالة لازم تعطيها هذه القيم.
+
     /*
    في هذه المرحلة حولت بطاقة الفيلم إلى دالة نوعها Widget
-    حتى أقلل تكرار الكود. جعلت الدالة تستقبل 
-   title و subtitle و rating باستخدام required، 
-   ثم استخدمت هذه القيم داخل Text. وأضفت Spacer قبل صندوق التقييم حتى يظهر التقييم في يمين البطاقة.
-   */
+   حتى أقلل تكرار الكود. جعلت الدالة تستقبل
+   title و subtitle و rating باستخدام required،
+   ثم استخدمت هذه القيم داخل Text.
+   وأضفت Spacer قبل صندوق التقييم حتى يظهر التقييم في يمين البطاقة.
+
+   في المرحلة الثامنة أضفنا GestureDetector حتى تصبح البطاقة قابلة للضغط.
+   عند الضغط على البطاقة يتم الانتقال إلى صفحة DetailsScreen باستخدام Navigator.push.
+  */
+    required BuildContext context,
+
+    // والـ Navigator يحتاج context حتى يعرف من أين ينقل المستخدم إلى الشاشة الجديدة.
     required String title,
     required String subtitle,
     required String rating,
+    required String description,
   }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(16),
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-
-        // جعل زوايا البطاقة دائرية
-        borderRadius: BorderRadius.circular(12),
-
-        // إضافة ظل للبطاقة
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-
-        children: [
-          // صندوق الأيقونة
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: const Color(0xFFD9E2EC),
-              borderRadius: BorderRadius.circular(8),
+    // GestureDetector يجعل البطاقة قابلة للضغط
+    return GestureDetector(
+      // onTap تعمل عندما يضغط المستخدم على البطاقة
+      onTap: () {
+        // الانتقال إلى شاشة التفاصيل
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => DetailsScreen(
+              title: title,
+              subtitle: subtitle,
+              rating: rating,
+              description: description,
             ),
-            child: const Icon(Icons.movie, color: Color(0xFF1E2A38)),
           ),
+        );
+      },
 
-          // مسافة بين الأيقونة والنصوص
-          const SizedBox(width: 16),
+      // البطاقة القديمة نفسها وضعناها داخل GestureDetector
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.all(16),
 
-          // اسم الفيلم والنوع
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+        decoration: BoxDecoration(
+          color: Colors.white,
+
+          // جعل زوايا البطاقة دائرية
+          borderRadius: BorderRadius.circular(12),
+
+          // إضافة ظل للبطاقة
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            // صندوق الأيقونة
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: const Color(0xFFD9E2EC),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.movie, color: Color(0xFF1E2A38)),
+            ),
+
+            // مسافة بين الأيقونة والنصوص
+            const SizedBox(width: 16),
+
+            // اسم الفيلم والنوع
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
 
-              Text(
-                subtitle,
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-              ),
-            ],
-          ),
-
-          // يدفع التقييم إلى أقصى اليمين
-          const Spacer(),
-
-          // صندوق التقييم
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(
-              color: Color(0xFFC9A227),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade400,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
+                Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                 ),
               ],
             ),
-            child: Text(
-              rating,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
+
+            // يدفع التقييم إلى أقصى اليمين
+            const Spacer(),
+
+            // صندوق التقييم
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: const Color(0xFFC9A227),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400,
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Text(
+                rating,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
